@@ -14,6 +14,14 @@ export default function Login({ user, setUser }) {
     password: "",
   });
 
+  useEffect(() => {
+    // if user is already logged in,
+    // redirect them to the home page
+    if (user?.email) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   const handleOnInputChange = (event) => {
     if (event.target.name === "email") {
       if (event.target.value.indexOf("@") === -1) {
