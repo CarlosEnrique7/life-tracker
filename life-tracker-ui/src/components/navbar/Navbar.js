@@ -3,6 +3,7 @@ import "./Navbar.css";
 import logo from "../assets/codepath.svg";
 import Button from "@material-ui/core/Button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const style = {
   background: "linear-gradient(45deg, #48CAE4 30%, #0077B6 90%)",
@@ -16,12 +17,14 @@ const signOutStyle = {
   boxShadow: "0 3px 5px 2px rgba(239, 35, 60, .3)",
 };
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <div className="navbar">
-      <img className="logo" src={logo} alt="logo" />
+      <Link to="/">
+        <img className="logo" src={logo} alt="logo" />
+      </Link>
       <div className="nav-links">
         <h5 className="link-name">Activity</h5>
         <h5 className="link-name">Exercise</h5>
@@ -30,12 +33,16 @@ const Navbar = () => {
       </div>
       {!loggedIn ? (
         <div className="buttons">
-          <Button variant="outlined" color="primary">
-            Sign in
-          </Button>
-          <Button variant="contained" color="primary" style={style}>
-            Register
-          </Button>
+          <Link to="/login">
+            <Button variant="outlined" color="primary" style={{ height: 48 }}>
+              Sign in
+            </Button>
+          </Link>
+          <Link to="/register">
+            <Button variant="contained" color="primary" style={style}>
+              Register
+            </Button>
+          </Link>
         </div>
       ) : (
         <div className="buttons">

@@ -2,5 +2,5 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, 240px);
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 120px;
 }
