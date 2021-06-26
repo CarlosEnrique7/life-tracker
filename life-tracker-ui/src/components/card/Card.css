@@ -1,0 +1,19 @@
+.card {
+  height: 260px;
+  width: 220px;
+  /* box-shadow: 5px 5px 20px rgb(72, 202, 228, 0.7); */
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 5px;
+  margin-top: 12px;
+}
+
+.image {
+  height: 200px;
+  width: 200px;
+  border-radius: 8px;
+}

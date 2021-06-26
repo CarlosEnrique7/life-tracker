@@ -1,0 +1,24 @@
+.home {
+  display: flex;
+  justify-content: space-around;
+  height: 30vh;
+  align-items: center;
+}
+
+.image-head {
+  height: 250px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 20px rgb(72, 202, 228, 0.7);
+}
+
+.header-title {
+  font-size: 48px;
+}
+
+.header-sub {
+  font-size: 20px;
+}
+
+.image-head:hover {
+  transform: scale(1.1);
+}
