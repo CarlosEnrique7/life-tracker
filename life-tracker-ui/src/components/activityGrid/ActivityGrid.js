@@ -26,8 +26,8 @@ const ActivityGrid = ({ exercise, calories, sleep }) => {
           <h4 className="time">{exercise + " minutes"}</h4>
         </Grid>
         <Grid item style={style} xs={12} sm={4}>
-          <h2 className="label">Average Calories consumed</h2>
-          <h4 className="time">{calories}</h4>
+          <h2 className="label">Average Calories</h2>
+          <h4 className="time">{calories + " calories consumed"}</h4>
         </Grid>
         <Grid item xs={false} sm={2}></Grid>
       </Grid>
@@ -35,7 +35,7 @@ const ActivityGrid = ({ exercise, calories, sleep }) => {
         <Grid item xs={false} sm={2}></Grid>
         <Grid item style={altStyle} xs={12} sm={4}>
           <h2 className="label">Average Hours of Sleep</h2>
-          <h4 className="time">{sleep}</h4>
+          <h4 className="time">{sleep + " hours"}</h4>
         </Grid>
         <Grid item xs={false} sm={2}></Grid>
       </Grid>

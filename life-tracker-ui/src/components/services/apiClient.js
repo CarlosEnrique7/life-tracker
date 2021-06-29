@@ -46,7 +46,19 @@ class ApiClient {
   }
 
   async getExerciseData() {
-    return this.request({ endpoint: "activity", method: "GET" });
+    return this.request({ endpoint: "activity/exercise", method: "GET" });
+  }
+
+  async getCalorieData() {
+    return this.request({ endpoint: "activity/calories", method: "GET" });
+  }
+
+  async getSleepData() {
+    return this.request({ endpoint: "activity/sleep", method: "GET" });
+  }
+
+  async addExerciseData(data) {
+    return this.request({ endpoint: "exercise", method: "POST", data: { data } });
   }
 }
 

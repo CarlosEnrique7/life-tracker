@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import apiClient from "../services/apiClient";
 import Register from "../register/Register";
 import Activity from "../activity/Activity";
+import Exercise from "../exercise/Exercise";
 
 function App() {
   const [user, setUser] = useState({});
@@ -32,6 +33,7 @@ function App() {
         <Route path="/login" element={<Login user={user} setUser={setUser} />} />
         <Route path="/register" element={<Register user={user} setUser={setUser} />} />
         <Route path="/activity" element={<Activity user={user} />} />
+        <Route path="/exercise" element={<Exercise user={user} />} />
       </Routes>
     </div>
   );

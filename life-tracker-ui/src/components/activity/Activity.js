@@ -5,16 +5,17 @@ import apiClient from "../services/apiClient";
 import { useState, useEffect } from "react";
 
 const Activity = ({ user }) => {
-  const [exercise, setExercise] = useState("No Exercises to display");
-  const [calories, setCalories] = useState("No Calories to display");
-  const [sleep, setSleep] = useState("No Sleep to display");
+  const [exercise, setExercise] = useState(0);
+  const [calories, setCalories] = useState(0);
+  const [sleep, setSleep] = useState(0);
 
   console.log(user);
   const fetchExerciseData = async () => {
     const { data, errors } = await apiClient.getExerciseData();
+    console.log(data);
     try {
-      console.log(data.activities.avg_duration);
-      const duration = data.activities.avg_duration;
+      console.log(data.exercise.avg_duration);
+      const duration = data.exercise.avg_duration;
       const avgDuration = Math.round(duration);
       console.log(avgDuration);
       setExercise(avgDuration);
@@ -24,11 +25,43 @@ const Activity = ({ user }) => {
     }
   };
 
+  const fetchCalorieData = async () => {
+    const { data, errors } = await apiClient.getCalorieData();
+    console.log(data);
+    try {
+      console.log(data.calories.avg_duration);
+      const duration = data.calories.avg_duration;
+      const avgDuration = Math.round(duration);
+      console.log(avgDuration);
+      setCalories(avgDuration);
+    } catch (err) {
+      console.log(err);
+      setCalories(0);
+    }
+  };
+
+  const fetchSleepData = async () => {
+    const { data, errors } = await apiClient.getSleepData();
+    console.log(data);
+    try {
+      console.log(data.sleep.avg_duration);
+      const duration = data.sleep.avg_duration;
+      const avgDuration = Math.round(duration);
+      console.log(avgDuration);
+      setSleep(avgDuration);
+    } catch (err) {
+      console.log(err);
+      setSleep(0);
+    }
+  };
+
   useEffect(() => {
     if (Object.keys(user).length === 0) {
       console.log("No user to fetch data for");
     } else {
       fetchExerciseData();
+      fetchCalorieData();
+      fetchSleepData();
     }
   }, []);
 

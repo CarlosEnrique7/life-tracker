@@ -40,7 +40,9 @@ const Navbar = () => {
         <Link to="/activity">
           <h5 className="link-name">Activity</h5>
         </Link>
-        <h5 className="link-name">Exercise</h5>
+        <Link to="/exercise">
+          <h5 className="link-name">Exercise</h5>
+        </Link>
         <h5 className="link-name">Nutrition</h5>
         <h5 className="link-name">Sleep</h5>
       </div>

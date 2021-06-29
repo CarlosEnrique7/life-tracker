@@ -11,6 +11,22 @@ class Activity {
 
     return result.rows[0];
   }
+  static async listAvgCalories({ user }) {
+    const query = `
+      select AVG(duration) AS avg_duration from food join users on users.id = food.user_id group by users.id having users.email = $1
+      `;
+    const result = await db.query(query, [user.email]);
+
+    return result.rows[0];
+  }
+  static async listAvgSleep({ user }) {
+    const query = `
+      select AVG(duration) AS avg_duration from sleep join users on users.id = sleep.user_id group by users.id having users.email = $1
+      `;
+    const result = await db.query(query, [user.email]);
+
+    return result.rows[0];
+  }
 }
 
 module.exports = Activity;
