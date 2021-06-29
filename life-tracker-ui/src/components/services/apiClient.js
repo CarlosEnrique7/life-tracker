@@ -44,6 +44,10 @@ class ApiClient {
   async signupUser(credentials) {
     return await this.request({ endpoint: "auth/register", method: "POST", data: credentials });
   }
+
+  async getExerciseData() {
+    return this.request({ endpoint: "activity", method: "GET" });
+  }
 }
 
 export default new ApiClient(process.env.REACT_APP_REMOTE_HOST_URL || "http://localhost:3001");

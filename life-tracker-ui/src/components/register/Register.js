@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../services/apiClient";
-import "./Login.css";
-import { Button } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import "./Register.css";
 import Navbar from "../navbar/Navbar";
 
-export default function Login({ user, setUser }) {
+export default function Register({ user, setUser }) {
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
+    passwordConfirm: "",
   });
 
   useEffect(() => {
     // if user is already logged in,
     // redirect them to the home page
     if (user?.email) {
-      navigate("/activity");
+      navigate("/");
     }
   }, [user, navigate]);
 
@@ -32,6 +34,14 @@ export default function Login({ user, setUser }) {
       }
     }
 
+    if (event.target.name === "passwordConfirm") {
+      if (event.target.value !== form.password) {
+        setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
+      } else {
+        setErrors((e) => ({ ...e, passwordConfirm: null }));
+      }
+    }
+
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
@@ -39,7 +49,15 @@ export default function Login({ user, setUser }) {
     setIsProcessing(true);
     setErrors((e) => ({ ...e, form: null }));
 
-    const { data, error } = await apiClient.loginUser({ name: form.name, email: form.email, password: form.password });
+    if (form.passwordConfirm !== form.password) {
+      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
+      setIsProcessing(false);
+      return;
+    } else {
+      setErrors((e) => ({ ...e, passwordConfirm: null }));
+    }
+
+    const { data, error } = await apiClient.signupUser({ name: form.name, email: form.email, password: form.password });
     if (error) setErrors((e) => ({ ...e, form: error }));
     if (data?.user) {
       setUser(data.user);
@@ -50,10 +68,10 @@ export default function Login({ user, setUser }) {
   };
 
   return (
-    <div className="Login">
+    <div className="Register">
       <Navbar />
       <div className="card">
-        <h2>Login</h2>
+        <h2>Create Account</h2>
 
         {errors.form && <span className="error">{errors.form}</span>}
         <br />
@@ -61,25 +79,32 @@ export default function Login({ user, setUser }) {
         <div className="form">
           <form noValidate autoComplete="off" className="login-form">
             <TextField
-              label="Email"
+              type="email"
               variant="standard"
               name="email"
+              placeholder="Enter a valid email"
               value={form.email}
               onChange={handleOnInputChange}
             />
             {errors.email && <span className="error">{errors.email}</span>}
-
             <TextField
-              label="Password"
-              variant="standard"
               type="password"
+              variant="standard"
               name="password"
-              placeholder="Password"
+              placeholder="Enter a secure password"
               value={form.password}
               onChange={handleOnInputChange}
             />
             {errors.password && <span className="error">{errors.password}</span>}
-
+            <TextField
+              type="password"
+              variant="standard"
+              name="passwordConfirm"
+              placeholder="Confirm your password"
+              value={form.passwordConfirm}
+              onChange={handleOnInputChange}
+            />
+            {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
             <Button
               className="btn"
               disabled={isProcessing}
@@ -88,15 +113,14 @@ export default function Login({ user, setUser }) {
               fullWidth
               style={{ backgroundColor: "white" }}
             >
-              {isProcessing ? "Loading..." : "Login"}
+              {isProcessing ? "Loading..." : "Create Account"}
             </Button>
           </form>
-        </div>
-
-        <div className="footer">
-          <p>
-            Don't have an account? Sign up <Link to="/register">here</Link>
-          </p>
+          <div className="footer">
+            <p>
+              Already have an account? Login <Link to="/login">here</Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

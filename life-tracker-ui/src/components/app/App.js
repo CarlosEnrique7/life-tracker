@@ -1,10 +1,11 @@
 import "./App.css";
-import Navbar from "../navbar/Navbar";
 import Homepage from "../homepage/Homepage";
 import { Routes, Route } from "react-router-dom";
 import Login from "../login/Login";
 import { useState, useEffect } from "react";
 import apiClient from "../services/apiClient";
+import Register from "../register/Register";
+import Activity from "../activity/Activity";
 
 function App() {
   const [user, setUser] = useState({});
@@ -16,19 +17,21 @@ function App() {
       if (data) setUser(data.user);
       if (error) setError(error);
     };
-    const token = localStorage.getItem("student_store_token");
+    const token = localStorage.getItem("fitness_tracker_token");
     if (token) {
       apiClient.setToken(token);
       fetchUser();
     }
   }, []);
 
+  // console.log(user);
   return (
     <div className="App">
-      <Navbar user={user} />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login user={user} setUser={setUser} />} />
+        <Route path="/register" element={<Register user={user} setUser={setUser} />} />
+        <Route path="/activity" element={<Activity user={user} />} />
       </Routes>
     </div>
   );

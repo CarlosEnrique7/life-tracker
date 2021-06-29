@@ -39,3 +39,7 @@
 a {
   text-decoration: none;
 }
+a:visited {
+  text-decoration: none;
+  color: #0077b6;
+}

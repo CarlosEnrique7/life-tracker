@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import logo from "../assets/codepath.svg";
 import Button from "@material-ui/core/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const style = {
@@ -17,8 +17,19 @@ const signOutStyle = {
   boxShadow: "0 3px 5px 2px rgba(239, 35, 60, .3)",
 };
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("fitness_tracker_token")) {
+      setLoggedIn(!loggedIn);
+    }
+  }, []);
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
 
   return (
     <div className="navbar">
@@ -26,7 +37,9 @@ const Navbar = ({ user }) => {
         <img className="logo" src={logo} alt="logo" />
       </Link>
       <div className="nav-links">
-        <h5 className="link-name">Activity</h5>
+        <Link to="/activity">
+          <h5 className="link-name">Activity</h5>
+        </Link>
         <h5 className="link-name">Exercise</h5>
         <h5 className="link-name">Nutrition</h5>
         <h5 className="link-name">Sleep</h5>
@@ -46,7 +59,7 @@ const Navbar = ({ user }) => {
         </div>
       ) : (
         <div className="buttons">
-          <Button variant="contained" color="secondary" style={signOutStyle}>
+          <Button variant="contained" color="secondary" style={signOutStyle} onClick={handleLogOut}>
             Sign out
           </Button>
         </div>
