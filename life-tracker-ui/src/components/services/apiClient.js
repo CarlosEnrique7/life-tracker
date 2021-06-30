@@ -58,7 +58,7 @@ class ApiClient {
   }
 
   async addExerciseData(data) {
-    return this.request({ endpoint: "exercise", method: "POST", data: { data } });
+    return this.request({ endpoint: "exercise", method: "POST", data: data });
   }
 }
 
