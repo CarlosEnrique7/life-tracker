@@ -60,6 +60,10 @@ class ApiClient {
   async addExerciseData(data) {
     return this.request({ endpoint: "exercise", method: "POST", data: data });
   }
+
+  async listExercises(user) {
+    return this.request({ endpoint: "exercise", method: "GET" });
+  }
 }
 
 export default new ApiClient(process.env.REACT_APP_REMOTE_HOST_URL || "http://localhost:3001");

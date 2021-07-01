@@ -10,6 +10,18 @@ class Exercise {
 
     return result.rows[0];
   }
+
+  static async listAllExercises({ user }) {
+    const query = `
+    SELECT name, category, duration, intensity, timestamp
+      FROM exercises 
+      WHERE user_id = (SELECT id FROM users WHERE users.email = $1)
+      ORDER BY timestamp ASC
+    `;
+    const result = await db.query(query, [user.email]);
+
+    return result.rows;
+  }
 }
 
 module.exports = Exercise;

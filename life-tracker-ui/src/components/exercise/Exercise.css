@@ -11,3 +11,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.Exercise .form {
+  display: flex;
+  justify-content: center;
+}

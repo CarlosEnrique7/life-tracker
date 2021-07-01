@@ -3,8 +3,9 @@ import { TextField } from "@material-ui/core";
 import { useState } from "react";
 import apiClient from "../services/apiClient";
 import { Button } from "@material-ui/core";
+import "./ExerciseInfo.css";
 
-const ExerciseInfo = () => {
+const ExerciseInfo = ({ exercises, setExercises }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
@@ -31,7 +32,7 @@ const ExerciseInfo = () => {
     });
     // log data to see object
     console.log("31", data);
-
+    setExercises([...exercises, data.exercise]);
     setIsProcessing(false);
   };
 
@@ -40,6 +41,7 @@ const ExerciseInfo = () => {
       <div className="form">
         <form noValidate autoComplete="off" className="exercise-form">
           <TextField
+            className="textfield"
             type="text"
             variant="standard"
             name="name"
@@ -48,6 +50,7 @@ const ExerciseInfo = () => {
             onChange={handleOnInputChange}
           />
           <TextField
+            className="textfield"
             type="text"
             variant="standard"
             name="category"
@@ -56,6 +59,7 @@ const ExerciseInfo = () => {
             onChange={handleOnInputChange}
           />
           <TextField
+            className="textfield"
             type="number"
             variant="standard"
             name="duration"
@@ -64,6 +68,7 @@ const ExerciseInfo = () => {
             onChange={handleOnInputChange}
           />
           <TextField
+            className="textfield"
             type="number"
             variant="standard"
             name="intensity"
@@ -76,7 +81,6 @@ const ExerciseInfo = () => {
             disabled={isProcessing}
             onClick={handleOnSubmit}
             variant="contained"
-            fullWidth
             style={{ backgroundColor: "white" }}
           >
             {isProcessing ? "Loading..." : "Submit Exercise"}
