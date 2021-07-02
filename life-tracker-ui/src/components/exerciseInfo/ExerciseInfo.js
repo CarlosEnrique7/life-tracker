@@ -20,6 +20,10 @@ const ExerciseInfo = ({ exercises, setExercises }) => {
   };
 
   const handleOnSubmit = async () => {
+    if (form.name == "" || form.category == "" || form.quantity == "" || form.calories == "") {
+      return alert("Please fill out the entire form.");
+    }
+
     setIsProcessing(true);
 
     const { data } = await apiClient.addExerciseData({

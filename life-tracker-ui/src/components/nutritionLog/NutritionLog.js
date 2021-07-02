@@ -4,10 +4,21 @@ import apiClient from "../services/apiClient";
 import NutritionCard from "./NutritionCard";
 import "./NutritionLog.css";
 
+const formatDate = (dateString) => {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 const NutritionLog = ({ nutrition, setNutrition }) => {
-  const date = new Date();
-  let [month, day, year] = [date.getMonth(), date.getDay(), date.getFullYear()];
-  const time = new Date().toLocaleTimeString();
+  const currentTime = new Date().toLocaleString();
+  console.log("current time", currentTime);
 
   useEffect(() => {
     const fetchNutrition = async () => {
@@ -29,7 +40,7 @@ const NutritionLog = ({ nutrition, setNutrition }) => {
           category={entry.category}
           quantity={entry.quantity}
           calories={entry.calories}
-          timestamp={entry.timestamp || `${month}/${day}/${year} ${time}`}
+          timestamp={formatDate(entry.timestamp) == "Invalid Date" ? currentTime : formatDate(entry.timestamp)}
         />
       ))}
     </div>

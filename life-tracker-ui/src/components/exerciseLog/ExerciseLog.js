@@ -4,10 +4,21 @@ import apiClient from "../services/apiClient";
 import ExerciseCard from "./ExerciseCard";
 import "./ExerciseLog.css";
 
+const formatDate = (dateString) => {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 const ExerciseLog = ({ exercises, setExercises }) => {
-  const date = new Date();
-  let [month, day, year] = [date.getMonth(), date.getDay(), date.getFullYear()];
-  const time = new Date().toLocaleTimeString();
+  const currentTime = new Date().toLocaleString();
+  console.log("current time", currentTime);
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -29,7 +40,7 @@ const ExerciseLog = ({ exercises, setExercises }) => {
           category={exercise.category}
           duration={exercise.duration}
           intensity={exercise.intensity}
-          timestamp={exercise.timestamp || `${month}/${day}/${year} ${time}`}
+          timestamp={formatDate(exercise.timestamp) == "Invalid Date" ? currentTime : formatDate(exercise.timestamp)}
         />
       ))}
     </div>
