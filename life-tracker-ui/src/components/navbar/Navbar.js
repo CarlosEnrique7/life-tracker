@@ -43,7 +43,9 @@ const Navbar = () => {
         <Link to="/exercise">
           <h5 className="link-name">Exercise</h5>
         </Link>
-        <h5 className="link-name">Nutrition</h5>
+        <Link to="/calories">
+          <h5 className="link-name">Nutrition</h5>
+        </Link>
         <h5 className="link-name">Sleep</h5>
       </div>
       {!loggedIn ? (

@@ -13,7 +13,7 @@ class Activity {
   }
   static async listAvgCalories({ user }) {
     const query = `
-      select AVG(duration) AS avg_duration from food join users on users.id = food.user_id group by users.id having users.email = $1
+      select AVG(calories) AS avg_calories from food join users on users.id = food.user_id group by users.id having users.email = $1
       `;
     const result = await db.query(query, [user.email]);
 

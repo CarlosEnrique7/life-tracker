@@ -38,11 +38,23 @@
   width: 100%;
 }
 
-.Register-form {
+.register-form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 25vh;
+  height: 35vh;
   width: 400px;
   color: white;
+}
+
+.register-form .name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.register-form .register-fields {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }

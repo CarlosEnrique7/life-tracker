@@ -7,6 +7,7 @@ import apiClient from "../services/apiClient";
 import Register from "../register/Register";
 import Activity from "../activity/Activity";
 import Exercise from "../exercise/Exercise";
+import Nutrition from "../nutrition/Nutrition";
 
 function App() {
   const [user, setUser] = useState({});
@@ -34,6 +35,7 @@ function App() {
         <Route path="/register" element={<Register user={user} setUser={setUser} />} />
         <Route path="/activity" element={<Activity user={user} />} />
         <Route path="/exercise" element={<Exercise user={user} />} />
+        <Route path="/calories" element={<Nutrition user={user} />} />
       </Routes>
     </div>
   );

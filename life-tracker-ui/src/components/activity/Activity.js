@@ -29,11 +29,11 @@ const Activity = ({ user }) => {
     const { data, errors } = await apiClient.getCalorieData();
     console.log(data);
     try {
-      console.log(data.calories.avg_duration);
-      const duration = data.calories.avg_duration;
-      const avgDuration = Math.round(duration);
-      console.log(avgDuration);
-      setCalories(avgDuration);
+      console.log("calories", data.calories.avg_calories);
+      const calories = data.calories.avg_calories;
+      const avgCalories = Math.round(calories);
+      console.log(avgCalories);
+      setCalories(avgCalories);
     } catch (err) {
       console.log(err);
       setCalories(0);

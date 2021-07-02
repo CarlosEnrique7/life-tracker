@@ -8,6 +8,7 @@ class User {
     return {
       id: user.id,
       email: user.email,
+      username: user.username,
       isAdmin: user.is_admin,
       createdAt: user.created_at,
     };
@@ -33,7 +34,7 @@ class User {
   }
 
   static async register(credentials) {
-    const requiredFields = ["email", "password", "isAdmin"];
+    const requiredFields = ["email", "password", "firstName", "lastName", "username", "isAdmin"];
     requiredFields.forEach((property) => {
       if (!credentials.hasOwnProperty(property)) {
         throw new BadRequestError(`Missing ${property} in request body.`);
@@ -44,20 +45,33 @@ class User {
       throw new BadRequestError("Invalid email.");
     }
 
-    const existingUser = await User.fetchUserByEmail(credentials.email);
-    if (existingUser) {
+    const existingUserEmail = await User.fetchUserByEmail(credentials.email);
+    if (existingUserEmail) {
       throw new BadRequestError(`A user already exists with email: ${credentials.email}`);
+    }
+
+    const existingUsername = await User.fetchUserByUsername(credentials.username);
+    if (existingUsername) {
+      throw new BadRequestError(`A user already exists with username: ${credentials.username}`);
     }
 
     const hashedPassword = await bcrypt.hash(credentials.password, BCRYPT_WORK_FACTOR);
     const normalizedEmail = credentials.email.toLowerCase();
+    const normalizedUsername = credentials.username.toLowerCase();
 
     const userResult = await db.query(
-      `INSERT INTO users (email, password, is_admin)
-        VALUES ($1, $2, $3)
-        RETURNING id, email, is_admin, created_at;
+      `INSERT INTO users (first_name, last_name, username, email, password, is_admin)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING id, first_name, last_name, username, email, is_admin, created_at;
       `,
-      [normalizedEmail, hashedPassword, credentials.isAdmin]
+      [
+        credentials.firstName,
+        credentials.lastName,
+        normalizedUsername,
+        normalizedEmail,
+        hashedPassword,
+        credentials.isAdmin,
+      ]
     );
     const user = userResult.rows[0];
 
@@ -72,6 +86,20 @@ class User {
     const query = `SELECT * FROM users WHERE email = $1`;
 
     const result = await db.query(query, [email.toLowerCase()]);
+
+    const user = result.rows[0];
+
+    return user;
+  }
+
+  static async fetchUserByUsername(username) {
+    if (!username) {
+      throw new BadRequestError("No username provided");
+    }
+
+    const query = `SELECT * FROM users WHERE username = $1`;
+
+    const result = await db.query(query, [username.toLowerCase()]);
 
     const user = result.rows[0];
 

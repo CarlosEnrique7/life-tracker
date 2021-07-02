@@ -1,0 +1,18 @@
+.banner {
+  margin-top: 86px;
+  text-align: center;
+  font-size: 3rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(https://images.pexels.com/photos/863988/pexels-photo-863988.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260)
+      center/cover no-repeat;
+  height: 180px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Nutrition .form {
+  display: flex;
+  justify-content: center;
+}
